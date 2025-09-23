@@ -2,12 +2,30 @@
 import 'package:despertador/presentation/widgets/shared/custom_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_dropdown/multi_dropdown.dart';
+
+final festivos = [
+  DropdownItem(label: 'Activado', value: 'activado'),
+  DropdownItem(label: 'Desactivado', value: 'desactivado'),
+];
+
+final dias = [
+  DropdownItem(label: 'Lunes', value: 'lunes'),
+  DropdownItem(label: 'martes', value: 'martes'),
+  DropdownItem(label: 'miercoles', value: 'miercoles'),
+  DropdownItem(label: 'jueves', value: 'jueves'),
+  DropdownItem(label: 'viernes', value: 'viernes'),
+];
 
 class CalendarioScreen extends StatelessWidget {
   const CalendarioScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    final diasController = MultiSelectController<String>();
+    final festivosController = MultiSelectController<String>();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -30,7 +48,7 @@ class CalendarioScreen extends StatelessWidget {
               SizedBox(height:10,),
               SizedBox(
                 width: double.infinity,
-                child: CustomDropDown(),
+                child: CustomDropDown(controller: diasController, hintText: 'dias', items: dias, callback: ( selected ){}),
               ),
 
               SizedBox(height:30,),
@@ -38,7 +56,7 @@ class CalendarioScreen extends StatelessWidget {
               SizedBox(height:10,),
               SizedBox(
                 width: double.infinity,
-                child: CustomDropDown(),
+                child: CustomDropDown( controller: festivosController, hintText: 'festivos', items: festivos, callback: ( selected ){}),
               ),
 
               SizedBox(height: 20,),

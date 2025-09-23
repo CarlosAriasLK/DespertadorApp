@@ -4,10 +4,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:go_router/go_router.dart';
+import 'package:multi_dropdown/multi_dropdown.dart';
 
 enum diasSemana {
   lunes, martes, mieroles, jueves, viernes
 }
+
+final sonidos = [
+  DropdownItem(label: 'Por defecto', value: 'defecto'),
+  DropdownItem(label: 'Melodia Suave', value: 'melodiasuave'),
+  DropdownItem(label: 'Rock', value: 'rock'),
+];
 
 class AddAlarmScreen extends StatefulWidget {
   const AddAlarmScreen({super.key});
@@ -17,6 +24,14 @@ class AddAlarmScreen extends StatefulWidget {
 }
 
 class _AddAlarmScreenState extends State<AddAlarmScreen> {
+
+  DateTime? _dateTime;
+  final sonidoController = MultiSelectController<String>();
+  final etiquetaController = TextEditingController();
+  List<diasSemana> repetir = [];
+  String? sonido;
+  bool posponer = false;
+
   @override
   Widget build(BuildContext context) {
 
@@ -46,7 +61,8 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
               isForce2Digits: true,
               onTimeChange: (time) {
                 setState(() {
-                  // _dateTime = time;
+                  _dateTime = time;
+                  print(_dateTime);
                 });
               },
             ),
@@ -63,6 +79,7 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
               children: [
                 SegmentedButton(
                   direction: Axis.horizontal,
+
                   style: ButtonStyle(
                       shape: WidgetStatePropertyAll(
                           RoundedRectangleBorder(
@@ -70,16 +87,24 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
                           )
                       )
                   ),
+
                   segments: [
                     ButtonSegment(value: diasSemana.lunes, label: Text('lu') ),
                     ButtonSegment(value: diasSemana.martes, label: Text('ma') ),
                     ButtonSegment(value: diasSemana.mieroles, label: Text('mie') ),
-                    ButtonSegment(value: diasSemana.mieroles, label: Text('Ju') ),
-                    ButtonSegment(value: diasSemana.mieroles, label: Text('Vie') ),
+                    ButtonSegment(value: diasSemana.jueves, label: Text('Ju') ),
+                    ButtonSegment(value: diasSemana.viernes, label: Text('Vie') ),
                   ],
                   showSelectedIcon: false,
-
-                  selected: <diasSemana>{ diasSemana.lunes },
+                  multiSelectionEnabled: true,
+                  emptySelectionAllowed: true,
+                  selected: repetir.toSet(),
+                  onSelectionChanged: (Set<diasSemana> dias) {
+                    setState(() {
+                      repetir = dias.toList();
+                      print(repetir);
+                    });
+                  },
                 )
               ],
             ),
@@ -94,6 +119,7 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
             SizedBox(
               width: 350,
               child: TextFormField(
+                controller: etiquetaController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   label: Text('Etiqueta'),
@@ -112,7 +138,16 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
             SizedBox(height: 10,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: CustomDropDown(),
+              child: CustomDropDown(
+                hintText: 'Sonido',
+                items: sonidos,
+                controller: sonidoController,
+                callback: (value) {
+                setState(() {
+                  sonido = value;
+                  print(sonido);
+                });
+              },),
             ),
 
 
@@ -122,9 +157,12 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
               width: 200,
               child: SwitchListTile(
                 title: Text('Posponer'),
-                value: true,
+                value: posponer,
                 onChanged: (value) {
-
+                  setState(() {
+                    posponer = value;
+                    print(posponer);
+                  });
                 },
               ),
             ),
@@ -148,7 +186,9 @@ class _AddAlarmScreenState extends State<AddAlarmScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FilledButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          print( etiquetaController.text );
+                        },
                         child: Text('Guardar')
                     ),
                   ),
