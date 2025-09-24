@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'alarma_provider.dart';
+part of 'theme_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,52 +9,52 @@ part of 'alarma_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(AlarmaProvider)
-const alarmaProviderProvider = AlarmaProviderProvider._();
+@ProviderFor(ThemeController)
+const themeControllerProvider = ThemeControllerProvider._();
 
-final class AlarmaProviderProvider
-    extends $NotifierProvider<AlarmaProvider, AlarmaState> {
-  const AlarmaProviderProvider._()
+final class ThemeControllerProvider
+    extends $NotifierProvider<ThemeController, bool> {
+  const ThemeControllerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'alarmaProviderProvider',
+        name: r'themeControllerProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$alarmaProviderHash();
+  String debugGetCreateSourceHash() => _$themeControllerHash();
 
   @$internal
   @override
-  AlarmaProvider create() => AlarmaProvider();
+  ThemeController create() => ThemeController();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(AlarmaState value) {
+  Override overrideWithValue(bool value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<AlarmaState>(value),
+      providerOverride: $SyncValueProvider<bool>(value),
     );
   }
 }
 
-String _$alarmaProviderHash() => r'bf41214d4acef0699e1ef30a3da41d4b41a8e50f';
+String _$themeControllerHash() => r'd1d30b9842108542ea33dedd396864cdd330b84f';
 
-abstract class _$AlarmaProvider extends $Notifier<AlarmaState> {
-  AlarmaState build();
+abstract class _$ThemeController extends $Notifier<bool> {
+  bool build();
   @$mustCallSuper
   @override
   void runBuild() {
     final created = build();
-    final ref = this.ref as $Ref<AlarmaState, AlarmaState>;
+    final ref = this.ref as $Ref<bool, bool>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AlarmaState, AlarmaState>,
-              AlarmaState,
+              AnyNotifier<bool, bool>,
+              bool,
               Object?,
               Object?
             >;

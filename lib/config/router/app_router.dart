@@ -5,6 +5,7 @@ import 'package:despertador/presentation/screens/add_alarm_screen.dart';
 import 'package:despertador/presentation/screens/apariencia_screen.dart';
 import 'package:despertador/presentation/screens/calendario_screen.dart';
 import 'package:despertador/presentation/screens/cuenta_screen.dart';
+import 'package:despertador/presentation/screens/edit_alarm_screen.dart';
 import 'package:despertador/presentation/screens/home_screen.dart';
 import 'package:despertador/presentation/screens/notifications_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -26,6 +27,15 @@ final appRouter = GoRouter(
       GoRoute(
         path: '/add-alarm',
         builder: (context, state) => AddAlarmScreen(),
+      ),
+
+      GoRoute(
+        path: '/edit-alarm/:alarmid',
+        builder: (context, state) {
+          final alarmid = state.pathParameters['alarmid'] ?? 'no-id';
+          return EditAlarmScreen(alarmId: alarmid);
+
+        },
       ),
 
       GoRoute(

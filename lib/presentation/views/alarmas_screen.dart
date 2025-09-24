@@ -1,51 +1,57 @@
+import 'package:despertador/presentation/providers/alarma_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class AlarmasScreen extends StatelessWidget {
+class AlarmasScreen extends ConsumerStatefulWidget {
   const AlarmasScreen({super.key});
 
   @override
+  AlarmasScreenState createState() => AlarmasScreenState();
+}
+
+class AlarmasScreenState extends ConsumerState<AlarmasScreen> {
+
+  @override
   Widget build(BuildContext context) {
+
+    final alarmasState = ref.watch( alarmaProviderProvider );
+
+    if( alarmasState.isLoading ) return Scaffold(body: Center(child: CircularProgressIndicator(),),);
+    if( alarmasState.errorMessage.isNotEmpty ) return Scaffold(body: Center(child: Text(alarmasState.errorMessage),),);
+
+    final alarmas = alarmasState.alarmas ?? [];
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text('Mis Alarmas'),
       ),
 
-      body: SingleChildScrollView(
+      body: alarmas.isEmpty
+        ?  Center(child: Text('Sin alarmas aun'))
+        : ListView.builder(
 
-        child: Column(
-          children: [
-            SwitchListTile(
-              title: Text('07:00'),
-              subtitle: Text('Lun, Mar, Mier, Jue, Vie'),
-              value: false,
+        itemCount: alarmas.length,
+        itemBuilder: (BuildContext context, int index) {
+          final alarma = alarmas[index];
+          return GestureDetector(
+            onLongPress: () {
+              context.push('/edit-alarm/${alarma.id}');
+            },
+            child: SwitchListTile(
+              title: Text(alarma.hora.toString()),
+              subtitle:  alarma.repetir.isNotEmpty ? Text(alarma.repetir.join(', ')) : Text('Nunca'),
+              value: alarma.activa,
               onChanged: (value) {
-
+                setState(() {
+                  alarma.activa = value;
+                });
               },
             ),
-
-            SwitchListTile(
-              title: Text('07:00'),
-              subtitle: Text('Lun, Mar, Mier, Jue, Vie'),
-              value: false,
-              onChanged: (value) {
-
-              },
-            ),
-
-            SwitchListTile(
-              title: Text('07:00'),
-              subtitle: Text('Lun, Mar, Mier, Jue, Vie'),
-              value: false,
-              onChanged: (value) {
-
-              },
-            ),
-
-          ],
-        ),
+          );
+        },
       ),
 
       floatingActionButton: FloatingActionButton(

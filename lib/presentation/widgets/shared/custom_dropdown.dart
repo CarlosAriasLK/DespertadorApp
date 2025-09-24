@@ -15,8 +15,6 @@ class CustomDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    String selected;
-
     return MultiDropdown(
       singleSelect: true,
       items: items,

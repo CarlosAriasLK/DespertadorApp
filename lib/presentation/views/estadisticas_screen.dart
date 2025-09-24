@@ -10,7 +10,7 @@ class EstadisticasScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     List<DateTime> myDates = [
-      DateTime(2022),
+      DateTime.now(),
     ];
 
     return Scaffold(
