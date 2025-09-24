@@ -4,8 +4,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class NotificationsScreen extends StatelessWidget {
+class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
+  @override
+  NotificationsScreenState createState() => NotificationsScreenState();
+}
+
+class NotificationsScreenState extends State<NotificationsScreen> {
+
+  bool notificaciones = false;
+  bool pastillas = false;
+  bool reuniones = false;
+  bool alarmas = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,26 +32,42 @@ class NotificationsScreen extends StatelessWidget {
 
           SwitchListTile(
             title: Text('Notificaciones Web'),
-            value: true,
-            onChanged: (value){},
+            value: notificaciones,
+            onChanged: (value){
+              setState(() {
+                notificaciones = value;
+              });
+            },
           ),
 
           SwitchListTile(
             title: Text('Recordar Pastillas'),
-            value: true,
-            onChanged: (value){},
+            value: pastillas,
+            onChanged: (value){
+              setState(() {
+                pastillas = value;
+              });
+            },
           ),
 
           SwitchListTile(
             title: Text('Recordar Reuniones'),
-            value: true,
-            onChanged: (value){},
+            value: reuniones,
+            onChanged: (value){
+              setState(() {
+                reuniones = value;
+              });
+            },
           ),
 
           SwitchListTile(
             title: Text('Recordar Alarmas'),
-            value: true,
-            onChanged: (value){},
+            value: alarmas,
+            onChanged: (value){
+              setState(() {
+                alarmas = value;
+              });
+            },
           ),
 
         ],
